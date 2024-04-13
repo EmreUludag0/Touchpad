@@ -1,5 +1,0 @@
-1 parmak = 18/19
-2 parmak = 17/16
-3 parmak = 14/13/12
-4 parmak = 10/11
-5 parmak = 9
