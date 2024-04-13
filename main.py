@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+import os 
 
 video = cv2.VideoCapture(0)
 
@@ -24,9 +25,26 @@ with mp_hands.Hands(static_image_mode=False) as  hands:
                 
                 parmakSayisi = sum(y > yukseklik_esik for y in yukseklikler)
                 
-                print("parmak sayisi", parmakSayisi)
+                print("parmak sayisi", parmakSayisi)                
 
                 mp_cizim.draw_landmarks(kamera, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+
+                if (parmakSayisi == 18) or (parmakSayisi == 19):
+                    print("1 parmak gösteriliyor")
+                    break
+                elif (parmakSayisi == 17) or (parmakSayisi == 16):
+                    print("2 parmak gösteriliyor")
+                    break
+                elif (parmakSayisi == 14) or (parmakSayisi == 13) or (parmakSayisi == 12):
+                    print("3 parmak gösteriliyor")
+                    break
+                elif (parmakSayisi == 11) or (parmakSayisi == 10):
+                    print("4 parmak gösteriliyor")
+                    break
+                elif (parmakSayisi == 9):
+                    print("5 parmak gösteriliyor")
+                    break
+
 
         cv2.imshow('El Cizimi',kamera)        
 
