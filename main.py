@@ -1,6 +1,7 @@
 import cv2
 import mediapipe as mp
-import os 
+import time
+import ctypes
 
 video = cv2.VideoCapture(0)
 
@@ -17,6 +18,7 @@ with mp_hands.Hands(static_image_mode=False) as  hands:
 
         rgb = cv2.cvtColor(kamera, cv2.COLOR_BGR2RGB)
         sonuc = hands.process(rgb)
+        yedekParmakSayisi = None
 
         # parmak index atama kısmı
         if sonuc.multi_hand_landmarks:
@@ -29,21 +31,33 @@ with mp_hands.Hands(static_image_mode=False) as  hands:
 
                 mp_cizim.draw_landmarks(kamera, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
-                if (parmakSayisi == 18) or (parmakSayisi == 19):
-                    print("1 parmak gösteriliyor")
-                    break
-                elif (parmakSayisi == 17) or (parmakSayisi == 16):
-                    print("2 parmak gösteriliyor")
-                    break
-                elif (parmakSayisi == 14) or (parmakSayisi == 13) or (parmakSayisi == 12):
-                    print("3 parmak gösteriliyor")
-                    break
-                elif (parmakSayisi == 11) or (parmakSayisi == 10):
-                    print("4 parmak gösteriliyor")
-                    break
-                elif (parmakSayisi == 9):
-                    print("5 parmak gösteriliyor")
-                    break
+                
+            yedekParmakSayisi = parmakSayisi
+
+        komut1 = 18
+        komut2 = 15
+        komut3 = 12
+        komut4 = 10
+        komut5 = 9
+
+        
+        time.sleep(2)
+        if(yedekParmakSayisi == komut1):
+            ctypes.windll.user32.LockWorkStation()
+            break
+        elif(yedekParmakSayisi == komut2):
+            
+            break
+        elif(yedekParmakSayisi == komut3):
+            print("3 parmak gösteriliyor")
+            break
+        elif(yedekParmakSayisi == komut4):
+            print("4 parmak gösteriliyor")
+            break
+        elif(yedekParmakSayisi == komut5):
+            print("5 parmak gösteriliyor")
+            break
+
 
 
         cv2.imshow('El Cizimi',kamera)        
