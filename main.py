@@ -3,9 +3,9 @@ import mediapipe as mp
 import time
 import ctypes
 import pyautogui
-import win32gui
-import win32process
-import win32con
+import os
+import webbrowser
+from PIL import ImageGrab
 
 video = cv2.VideoCapture(0)
 mp_cizim = mp.solutions.drawing_utils
@@ -17,18 +17,29 @@ yukseklik_esik = 0.5 #0.5'ten buyukse parmak olarak kabul edilir
 
 windows = pyautogui.getAllTitles()
 
+def Kilit():
+    ctypes.windll.user32.LockWorkStation()
+
 def Windows():
     for window in windows:
         if window != "Masaüstü":  
             pyautogui.getWindowsWithTitle(window)[0].minimize()  # Pencereyi minimize et
-            time.sleep(0.5)
+            #time.sleep(0.5)
 
-def yeniMasaustu():
-    new_desktop = "MyNewDesktop"
-    win32gui.CreateDesktop(new_desktop, None, None, 0, win32con.DESKTOP_CREATEWINDOW, None)
-    win32gui.SwitchDesktop(win32gui.OpenDesktop(new_desktop, 0, False, win32con.DESKTOP_SWITCHDESKTOP))
+def fotograf():
+    # Ekranın bir kısmını yakalama
+    screenshot = ImageGrab.grab()
+    # Ekran görüntüsünü kaydetme
+    screenshot.save("C:\\Users\\emreu\\Desktop\\screenshot.png")
 
-    
+#tanımladığım favori uygulamayı açmak için oluşturdum
+def favUygulama():
+    uygulama = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+    os.startfile(uygulama)
+
+def linkedinSayfam():
+    url = "https://www.linkedin.com/in/uludag-emre/"
+    webbrowser.open(url)
 
 
 with mp_hands.Hands(static_image_mode=False) as  hands:
@@ -53,7 +64,7 @@ with mp_hands.Hands(static_image_mode=False) as  hands:
                 
             yedekParmakSayisi = parmakSayisi
 
-        komut1 = 18
+        komut1 = 18     
         komut2 = 15
         komut3 = 12
         komut4 = 10
@@ -62,19 +73,19 @@ with mp_hands.Hands(static_image_mode=False) as  hands:
         
         #time.sleep(2)
         if(yedekParmakSayisi == komut1):
-            ctypes.windll.user32.LockWorkStation()
+            Kilit()
             break
         elif(yedekParmakSayisi == komut2):
             Windows()
             break
         elif(yedekParmakSayisi == komut3):
-            yeniMasaustu()
+            favUygulama()
             break
         elif(yedekParmakSayisi == komut4):
-            print("4 parmak gösteriliyor")
+            fotograf()            
             break
-        elif(yedekParmakSayisi == komut5):
-            print("5 parmak gösteriliyor")
+        if(yedekParmakSayisi == komut5):
+            linkedinSayfam()
             break
 
 
